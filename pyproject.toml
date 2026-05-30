@@ -1,0 +1,123 @@
+[project]
+name = "churn-analysis"
+version = "0.1.0"
+description = "Patterns analysis and precditions for churn variables."
+authors = [
+    {name = "Davi Santos"}
+]
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic (>=2.13.4,<3.0.0)",
+    "notebook (>=7.5.6,<8.0.0)",
+    "pandas (>=3.0.3,<4.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "mypy (>=2.1.0,<3.0.0)",
+    "ruff (>=0.15.15,<0.16.0)",
+    "pandas-stubs (>=3.0.0.260204,<4.0.0.0)"
+]
+
+[project.scripts]
+extract = "churn_analysis.ETL.extract:extraction"
+
+
+
+[tool.mypy]
+# Match your target Python version
+python_version = "3.11"
+
+# The Enterprise Standard: Turn on ALL strict type-checking rules
+strict = true
+
+# Warns you if you return a variable whose type Mypy cannot figure out
+warn_return_any = true
+# Warns you if you wrote a Mypy config rule that isn't doing anything
+warn_unused_configs = true
+# Forces you to write type hints for every single function definition
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+# Checks the logic inside functions even if they don't have type hints yet
+check_untyped_defs = true
+
+[tool.ruff]
+# 1. Global Rules
+# The standard Enterprise line length (Matches the 'Black' formatter standard)
+line-length = 88
+
+# IMPORTANT: Match this to your [project] requires-python = ">=3.11"
+target-version = "py311"
+
+# Directories to exclude from linting/formatting
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "__pycache__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+[tool.ruff.lint]
+# 2. The Strict Enterprise Rule Sets
+select = [
+    "E",    # pycodestyle errors (spacing, syntax)
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes (unused variables, undefined names)
+    "I",    # isort (automatically group and sort imports)
+    "UP",   # pyupgrade (force modern Python 3.11 syntax)
+    "N",    # pep8-naming (force standard variable/class naming)
+    "B",    # flake8-bugbear (finds common logic bugs)
+    "C4",   # flake8-comprehensions (forces efficient list/dict comprehensions)
+    "SIM",  # flake8-simplify (suggests simpler ways to write complex code)
+    "RUF", # Ruff-specific rules
+]
+
+# Rules to explicitly ignore
+ignore = [
+    "E501", # Line too long (Let the formatter handle line wrapping, not the linter)
+]
+
+# Allow Autofix for all enabled rules
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.format]
+# 3. Formatting Rules
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+# Enable auto-formatting of code examples inside your docstrings
+docstring-code-format = true
+docstring-code-line-length = "dynamic"
+
+[tool.ruff.lint.per-file-ignores]
+# 4. Context-Specific Rules
+# __init__.py files are allowed to have unused imports (used for exposing APIs)
+"__init__.py" = ["F401"]
+# Test files are allowed to use 'assert' statements and private variable access
+"tests/**/*.py" = ["S101", "SLF001"]

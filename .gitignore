@@ -1,0 +1,58 @@
+# 1. SECURITY & SECRETS
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+client_secret.json
+
+# 2. DATA & DATABASES
+*.csv
+*.tsv
+*.xlsx
+*.db
+*.sqlite
+*.sqlite3
+*.parquet
+*.feather
+*.h5
+*.pkl
+
+# 3. PYTHON ENVIRONMENTS & COMPILATION
+.venv*/
+venv/
+env/
+conda-env/
+
+# Python compiled bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 4. LINTING, TYPE CHECKING, & TESTING CACHES
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+
+# 5. JUPYTER NOTEBOOKS & DATA EXPLORATION
+.ipynb_checkpoints/
+profile_default/
+ipython_config.py
+
+# 6. IDE & EDITOR SETTINGS (Team Agnosticism)
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 7. OS GENERATED FILES (Cross-Platform Protection)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
