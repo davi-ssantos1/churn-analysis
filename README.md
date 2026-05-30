@@ -1,26 +1,19 @@
 ## Getting started
 
-Clone the repo and follow the setup instructions before running anything.
+**1. Jupyter Notebooks preview.**
+Since I'm using nbstripout to generate a clean notebook, sometimes the Jupyter Notebooks don't render correctly.
+If you want to view the content without cloning the repository, copy the notebook's URL and paste it into [nbviewer.org]("https://nbviewer.org/").
+
+**2. Clone the repo:**
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+git clone https://github.com/davi-ssantos1/churn-analysis.git
+cd churn-analysis
 ```
 
-## Setup Instructions
-
-After cloning the repo, run these two commands:
-
-**1. Install nbstripout to keep notebook diffs clean:**
+**3. Install nbstripout:**
 
 ```bash
 pip install nbstripout
 nbstripout --install
-```
-
-**2. Add a `.gitattributes` file at the repo root** with the following content:
-
-```
-* text=auto eol=lf
-*.ipynb filter=nbstripout
 ```
