@@ -1,3 +1,5 @@
+"""Extract data for the churn analysis pipeline."""
+
 from collections.abc import Generator
 from pathlib import Path
 
@@ -8,14 +10,17 @@ from churn_analysis.etl.schemas import CustomerRecord
 
 
 def validate_data(raw_data_path: Path) -> Generator[pd.DataFrame, None, None]:
-    """
-    Extract the CSV file in chunks, validade and yield as DataFrames.
+    """Extract, validate and yield the CSV file in chunks as DataFrames.
 
-    Architecture Note:
-    While this specific 7000 row dataset could be fitted in RAM, this extraction pipeline
-    implements a chunked generator pattern to demonstrate memory safe for an professional ETL.
-    """
+    Args:
+        raw_data_path: Absolute or relative path to the raw CSV file.
 
+    Raises:
+        Exception: If corrupted data is found in a row.
+
+    Yields:
+        Cleaned dataframe chunks.
+    """
     csv_reader = pd.read_csv(raw_data_path, chunksize=1000)
     for df_chunk_index, df_chunk in enumerate(csv_reader):
         clean_chunks = []

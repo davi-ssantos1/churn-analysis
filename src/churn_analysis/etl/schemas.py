@@ -1,9 +1,14 @@
+"""Define data modles for the churn analysis pipeline."""
+
 from pydantic import BaseModel, Field, field_validator
 
 
 class CustomerRecord(BaseModel):
-    """
-    Make a custom contract to data load the raw .csv file to a processed .db SQL file
+    """Validade and transform raw CSV customer records for SQLite database loading.
+
+    Raises:
+        ValueError: If a field value dont follow the specified record pattern.
+        TypeError: If a field receive an unsupported data type.
     """
 
     customer_id: str = Field(alias="customerID")
@@ -30,10 +35,7 @@ class CustomerRecord(BaseModel):
 
     @field_validator("senior_citizen", mode="before")
     @classmethod
-    def transform_0_1_to_true_false(cls, value: bool | int) -> bool:
-        """
-        Transform 0s and 1s integer features into True and False.
-        """
+    def _transform_0_1_to_true_false(cls, value: bool | int) -> bool:
         if isinstance(value, bool):
             return value
 
@@ -53,10 +55,7 @@ class CustomerRecord(BaseModel):
         mode="before",
     )
     @classmethod
-    def transform_yes_no_to_true_false(cls, value: str | bool) -> bool:
-        """
-        Transform 'Yes' or 'No' string features into True or False.
-        """
+    def _transform_yes_no_to_true_false(cls, value: str | bool) -> bool:
         if isinstance(value, bool):
             return value
 
@@ -80,12 +79,9 @@ class CustomerRecord(BaseModel):
         mode="before",
     )
     @classmethod
-    def transform_yes_no_notinternetservice_to_true_false(
+    def _transform_yes_no_notinternetservice_to_true_false(
         cls, value: str | bool
     ) -> bool:
-        """
-        Transform 'Yes', 'No' or 'Not Internet Service' string features to True or False.
-        """
         if isinstance(value, bool):
             return value
 
@@ -103,7 +99,7 @@ class CustomerRecord(BaseModel):
 
     @field_validator("total_charges", mode="before")
     @classmethod
-    def transform_empty_values_to_none(cls, value: str | float | None) -> float | None:
+    def _transform_empty_values_to_none(cls, value: str | float | None) -> float | None:
         if value is None or isinstance(value, float):
             return value
 
