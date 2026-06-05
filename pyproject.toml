@@ -38,33 +38,19 @@ warn_unused_configs = true
 [tool.ruff]
 line-length = 88
 target-version = "py311"
-exclude = [
-    ".git",
-    ".venv*",
-    "__pycache__",
-    "build",
-    "dist",
-    ".mypy_cache",
-    ".ruff_cache",
-]
 
 [tool.ruff.lint]
 select = ["D", "E", "W", "F", "I", "UP", "N", "B", "C4", "SIM", "RUF"]
 ignore = ["E501"]
-fixable = ["ALL"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]
-"tests/**/*.py" = ["S101", "SLF001"]
+"tests/**/*.py" = ["D"]
 "notebooks/**/*.ipynb" = ["D", "E402", "B"]
 
 [tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-skip-magic-trailing-comma = false
-line-ending = "auto"
 docstring-code-format = true
 docstring-code-line-length = "dynamic"
