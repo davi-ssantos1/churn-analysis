@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from churn_analysis.etl.extract import validate_data
-from churn_analysis.etl.load import load_in_chunks
-from churn_analysis.etl.transform import replace_missing_values_in_chunks
+from churn_analysis.etl._extract import validate_data
+from churn_analysis.etl._load import load_in_chunks
+from churn_analysis.etl._transform import replace_missing_values_in_chunks
 
 
 def extract_transform_load(

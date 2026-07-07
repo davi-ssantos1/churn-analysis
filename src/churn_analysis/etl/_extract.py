@@ -6,7 +6,7 @@ from pathlib import Path
 import pandas as pd
 from pydantic import ValidationError
 
-from churn_analysis.etl.schemas import CustomerRecord
+from churn_analysis.etl._schemas import CustomerRecord
 
 
 def validate_data(raw_data_path: Path) -> Generator[pd.DataFrame, None, None]:
