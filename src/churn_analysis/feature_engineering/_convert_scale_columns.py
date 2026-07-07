@@ -24,14 +24,17 @@ def _minamax_scale(dataframe: pd.DataFrame) -> pd.DataFrame:
 
 
 def convert_scale_dataframe(dataframe: pd.DataFrame, target: str) -> pd.DataFrame:
-    """Scale numeric columns from 0 to 1 using sklearn MinMax scaler and convert boolean columns to integer (Int64).
+    """Scale numeric columns and convert boolean columns to integers.
+
+    Numeric columns are scaled between 0.0 and 1.0 using MinxMaxScaler.
+    Boolean columns are converted to Int64.
 
     Args:
-        dataframe: _description_
-        target: _description_
+        dataframe: Source data to be scaled and converted.
+        target: Target column name.
 
     Returns:
-        _description_
+        Scaled and coverted dataframe.
     """
     dataframe = _minamax_scale(dataframe=dataframe)
     dataframe = _convert_boolean_to_int(dataframe=dataframe)
