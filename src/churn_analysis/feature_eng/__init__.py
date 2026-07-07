@@ -1,6 +1,6 @@
 """Feature engineering pipeline for statistical models."""
 
-from churn_analysis.feature_engineering.feature_engineering import (
+from churn_analysis.feature_eng.feature_engineering import (
     execute_feat_engineering,
 )
 

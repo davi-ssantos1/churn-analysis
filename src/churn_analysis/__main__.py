@@ -2,7 +2,7 @@
 
 from churn_analysis.config import DB_PATH, DB_TABLE_NAME, RAW_DATA_PATH, SCHEMA_MAP
 from churn_analysis.etl import extract_transform_load
-from churn_analysis.feature_engineering import execute_feat_engineering
+from churn_analysis.feature_eng import execute_feat_engineering
 
 
 def main() -> int:

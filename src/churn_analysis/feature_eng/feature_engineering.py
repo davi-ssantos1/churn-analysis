@@ -6,12 +6,12 @@ from pathlib import Path
 import numpy as np
 import numpy.typing as npt
 
-from churn_analysis.feature_engineering._convert_scale_columns import (
+from churn_analysis.feature_eng._convert_scale_columns import (
     convert_scale_dataframe,
 )
-from churn_analysis.feature_engineering._dataset_split import split_database
-from churn_analysis.feature_engineering._drop_columns import drop_cols
-from churn_analysis.feature_engineering._get_dummies_str import get_dummed_dataframe
+from churn_analysis.feature_eng._dataset_split import split_database
+from churn_analysis.feature_eng._drop_columns import drop_cols
+from churn_analysis.feature_eng._get_dummies_str import get_dummed_dataframe
 
 
 def execute_feat_engineering(
