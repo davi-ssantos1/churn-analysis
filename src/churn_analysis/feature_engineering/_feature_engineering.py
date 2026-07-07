@@ -1,3 +1,5 @@
+"""Execute feature engineering pipeline."""
+
 from collections.abc import Hashable, Mapping, Sequence
 from pathlib import Path
 
@@ -18,6 +20,21 @@ def execute_feat_engineering(
     db_table_name: str,
     schema_map: Mapping[Hashable, str],
 ) -> Sequence[npt.NDArray[np.float64]]:
+    """Execute the featue engineering pipeline for statistical models.
+
+    This process one-hot encodes categorical columns, drops highly correlated
+    columns, scales numeric columns between 0.0 and 1.0, transform boolean columns
+    into integers, and split the database into train and test partitions.
+
+    Args:
+        id_column: Primary key column name.
+        db_path: Absolute or relative path to the database file.
+        db_table_name: Name of the target table to create and populate.
+        schema_map: Contract for SQL query datatypes.
+
+    Returns:
+        Tuple of numpy arrays (x_train, x_test, y_train, y_test).
+    """
     df = get_dummed_dataframe(
         id_column=id_column,
         db_path=db_path,

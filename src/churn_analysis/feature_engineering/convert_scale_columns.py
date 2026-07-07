@@ -1,3 +1,5 @@
+"""Scale numeric columns from 0 to 1 and convert boolean columns to integer."""
+
 from copy import deepcopy
 
 import pandas as pd
@@ -22,6 +24,15 @@ def _minamax_scale(dataframe: pd.DataFrame) -> pd.DataFrame:
 
 
 def convert_scale_dataframe(dataframe: pd.DataFrame, target: str) -> pd.DataFrame:
+    """Scale numeric columns from 0 to 1 using sklearn MinMax scaler and convert boolean columns to integer (Int64).
+
+    Args:
+        dataframe: _description_
+        target: _description_
+
+    Returns:
+        _description_
+    """
     dataframe = _minamax_scale(dataframe=dataframe)
     dataframe = _convert_boolean_to_int(dataframe=dataframe)
     dataframe[target] = dataframe.pop(target)

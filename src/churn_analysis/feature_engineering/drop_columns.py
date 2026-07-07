@@ -1,3 +1,5 @@
+"""Drop high correlated columns from a DataFrame."""
+
 from copy import deepcopy
 from typing import Literal
 
@@ -27,6 +29,16 @@ def drop_cols(
     target_dtypes: list[Literal["number", "boolean"]],
     threshold: float,
 ) -> pd.DataFrame:
+    """Drop highly correlated columns to avoid multicolinearity for models like logistic regression.
+
+    Args:
+        dataframe: Source DataFrame whose columns will be dropped.
+        target_dtypes: Data types used to filter which columns will be analysed for dropping.
+        threshold: Minimum correlation value to drop a column (0 to 1).
+
+    Returns:
+        DataFrame without the highly correlated columns.
+    """
     dataframe = deepcopy(dataframe)
     for dtype in target_dtypes:
         cols_to_drop = _get_cols_to_drop(

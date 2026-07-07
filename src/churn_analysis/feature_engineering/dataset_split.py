@@ -1,3 +1,5 @@
+"""Split data into train and test partitions."""
+
 from collections.abc import Sequence
 
 import numpy as np
@@ -9,6 +11,15 @@ from sklearn.model_selection import train_test_split
 def split_database(
     dataframe: pd.DataFrame, target: str
 ) -> Sequence[npt.NDArray[np.float64]]:
+    """Split dataframe into x_train, x_test, y_train, y_test.
+
+    Args:
+        dataframe: Source data with X columns and a target column.
+        target: Target column name.
+
+    Returns:
+        Tuple of numpy arrays (x_train, x_test, y_train, y_test).
+    """
     x = dataframe.drop(columns=target).to_numpy()
     y = dataframe[target].to_numpy()
 
