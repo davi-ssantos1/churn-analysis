@@ -1,3 +1,5 @@
+"""Extract, transform and load (ETL) pipeline module for churn analysis."""
+
 from pathlib import Path
 
 from churn_analysis.etl._extract import validate_data
@@ -8,6 +10,13 @@ from churn_analysis.etl._transform import replace_missing_values_in_chunks
 def extract_transform_load(
     raw_data_path: Path, db_path: Path, db_table_name: str
 ) -> None:
+    """Extract and transform a CSV file, then load it into a database.
+
+    Args:
+        raw_data_path: Absolute or relative path to the CSV file.
+        db_path: Absolute or relative path to the data base file.
+        db_table_name: Name of the target table to create and populate.
+    """
     clean_data_stream = replace_missing_values_in_chunks(
         raw_data_path=raw_data_path,
         extraction_func=validate_data,
