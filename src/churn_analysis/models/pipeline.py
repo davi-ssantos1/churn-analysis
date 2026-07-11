@@ -6,7 +6,7 @@ import mlflow
 import numpy as np
 import numpy.typing as npt
 
-from churn_analysis.config import MODEL_NAMES, RANDOM_STATE
+from churn_analysis.config import MODEL_NAMES
 from churn_analysis.models._evaluate import evaluate
 from churn_analysis.models._optimize import tune_hyperparemeters
 from churn_analysis.models._predict import predict

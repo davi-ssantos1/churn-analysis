@@ -2,7 +2,6 @@ import numpy as np
 import numpy.typing as npt
 import optuna
 
-from churn_analysis.config import RANDOM_STATE
 from churn_analysis.models._evaluate import evaluate
 from churn_analysis.models._predict import predict
 from churn_analysis.models._registry import get_model
