@@ -1,3 +1,5 @@
+"""Model orchestrator pipeline module."""
+
 import json
 import os
 import tempfile
@@ -56,6 +58,17 @@ def models_pipeline(
     y_train: npt.NDArray[np.float64],
     y_test: npt.NDArray[np.float64],
 ) -> str:
+    """Execute the model orchestrastion pipeline.
+
+    Args:
+        x_train: Training input feature array.
+        x_test: Testing input feature array.
+        y_train: Training input target labels array.
+        y_test: Testing input target labels array.
+
+    Returns:
+        A dictionary contaning the parameters of the best model chosen and tuned.
+    """
     best_model_name = _get_winner_model(
         x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test
     )

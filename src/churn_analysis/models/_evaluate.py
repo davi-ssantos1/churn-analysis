@@ -1,3 +1,5 @@
+"""Model evaluation module."""
+
 from collections.abc import Sequence
 
 import numpy as np
@@ -9,6 +11,15 @@ def evaluate(
     y_true: npt.NDArray[np.float64],
     y_pred: npt.NDArray[np.float64],
 ) -> Sequence[dict]:
+    """Calculate the classification metrics for the provided arrays.
+
+    Args:
+        y_true: Ground truth target labels array.
+        y_pred: Predicted target labes array.
+
+    Returns:
+        A tuple with the flattened metrics dictionary and the full classification report dictionary.
+    """
     report = classification_report(y_true=y_true, y_pred=y_pred, output_dict=True)
     report["roc_auc"] = roc_auc_score(y_true=y_true, y_score=y_pred)
 

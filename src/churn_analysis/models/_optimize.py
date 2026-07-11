@@ -1,3 +1,5 @@
+"""Model tuning module."""
+
 import numpy as np
 import numpy.typing as npt
 import optuna
@@ -15,6 +17,15 @@ def tune_hyperparemeters(
     y_train: npt.NDArray[np.float64],
     y_test: npt.NDArray[np.float64],
 ) -> None:
+    """Tune the hyperparemeters of a given model using Optuna.
+
+    Args:
+        model_name: Name of the model to be selected and tuned.
+        x_train: Training input features array.
+        x_test: Test input features array.
+        y_train: Training input target labels array.
+        y_test: Testing input target labels array.
+    """
 
     def objective(trial: optuna.Trial) -> float:
         match model_name:

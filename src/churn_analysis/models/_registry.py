@@ -1,3 +1,5 @@
+"""'Model selection module."""
+
 from typing import cast
 
 from sklearn.ensemble import RandomForestClassifier
@@ -10,7 +12,17 @@ from churn_analysis.utils import ModelProtocol
 
 
 def get_model(model_name: str) -> ModelProtocol:
+    """Create a model instance based on the provided name.
 
+    Args:
+        model_name: Name of the model to be selected.
+
+    Raises:
+        ValueError: If module_name is not recognized
+
+    Returns:
+        The chosen model instance
+    """
     match model_name:
         case "xgboost":
             model = XGBClassifier(n_estimators=100, random_state=RANDOM_STATE)
