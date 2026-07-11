@@ -32,3 +32,10 @@ SCHEMA_MAP: Mapping[Hashable, str] = MappingProxyType(
         "churn": "boolean",
     }
 )
+MODEL_NAMES = (
+    "logistic_regression",
+    "random_forest",
+    "xgboost",
+    "k_nearest_neighbors",
+)
+RANDOM_STATE = 123
