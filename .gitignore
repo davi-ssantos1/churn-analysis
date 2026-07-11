@@ -56,3 +56,6 @@ ipython_config.py
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# MLFLOW
+mlruns/

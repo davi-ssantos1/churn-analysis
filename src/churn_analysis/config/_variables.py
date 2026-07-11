@@ -36,6 +36,6 @@ MODEL_NAMES = (
     "logistic_regression",
     "random_forest",
     "xgboost",
-    "k_nearest_neighbors",
+    "k_neighbors",
 )
 RANDOM_STATE = 123

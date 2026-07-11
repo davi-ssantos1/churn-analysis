@@ -40,7 +40,7 @@ def tune_hyperparemeters(
                 }
             case _:
                 raise ValueError(f"{model_name} model not found.")
-        model = get_model(model_name=model_name, random_state=RANDOM_STATE)
+        model = get_model(model_name=model_name)
         model.set_params(**params)
         model = train(model=model, x_train=x_train, y_train=y_train)
         y_pred = predict(model=model, X=x_test)
