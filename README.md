@@ -1,19 +1,35 @@
-## Getting started
+# Churn Analysis Pipeline
 
-**1. Jupyter Notebooks preview.**
-Since I'm using nbstripout to generate a clean notebook, sometimes the Jupyter Notebooks don't render correctly.
-If you want to view the content without cloning the repository, copy the notebook's URL and paste it into [nbviewer.org]("https://nbviewer.org/").
+An end-to-end machine learning pipeline for customer churn analysis, currently featuring a robust ETL module that processes raw data efficiently in chunks and loads it into a local database for downstream modeling.
 
-**2. Clone the repo:**
+## 🚀 Quick Setup
 
+1. **Create the virtual environment:**
 ```bash
-git clone https://github.com/davi-ssantos1/churn-analysis.git
-cd churn-analysis
+python -m venv .venv
 ```
 
-**3. Install nbstripout:**
-
+2. **Activate the environment:**
 ```bash
-pip install nbstripout
+# On Windows:
+.venv\Scripts\activate
+
+# On Linux/MacOS:
+source .venv/bin/activate
+```
+
+3. **Install Poetry and dependencies:**
+```bash
+pip install poetry
+poetry install
+```
+
+4. **Set up Jupyter hook:**
+```bash
 nbstripout --install
+```
+
+5. **Running the Project:**
+```bash
+python -m churn_analysis
 ```
