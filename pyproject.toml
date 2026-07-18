@@ -37,7 +37,7 @@ extract = "churn_analysis.ETL.extract:extraction"
 
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.12"
 strict = true
 warn_unused_configs = true
 
@@ -45,12 +45,13 @@ warn_unused_configs = true
 module = [
     "pandas.*",
     "sklearn.*",
+    "imblearn.*"
 ]
 ignore_missing_imports = true
 
 [tool.ruff]
 line-length = 88
-target-version = "py311"
+target-version = "py312"
 
 [tool.ruff.lint]
 select = ["D", "E", "W", "F", "I", "UP", "N", "B", "C4", "SIM", "RUF"]
