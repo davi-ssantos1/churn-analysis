@@ -1,6 +1,7 @@
 """Model evaluation module."""
 
 from collections.abc import Sequence
+from typing import Any
 
 import numpy as np
 import numpy.typing as npt
@@ -8,9 +9,9 @@ from sklearn.metrics import classification_report, roc_auc_score
 
 
 def evaluate(
-    y_true: npt.NDArray[np.float64],
-    y_pred: npt.NDArray[np.float64],
-) -> Sequence[dict]:
+    y_true: npt.NDArray[np.floating[Any]],
+    y_pred: npt.NDArray[np.floating[Any]],
+) -> Sequence[dict[str, Any]]:
     """Calculate the classification metrics for the provided arrays.
 
     Args:
@@ -20,7 +21,9 @@ def evaluate(
     Returns:
         A tuple with the flattened metrics dictionary and the full classification report dictionary.
     """
-    report = classification_report(y_true=y_true, y_pred=y_pred, output_dict=True)
+    report: dict[str, Any] = classification_report(
+        y_true=y_true, y_pred=y_pred, output_dict=True
+    )
     report["roc_auc"] = roc_auc_score(y_true=y_true, y_score=y_pred)
 
     flat_metrics = {

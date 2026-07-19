@@ -1,12 +1,14 @@
 from collections.abc import Hashable, Mapping
 from pathlib import Path
 from types import MappingProxyType
+from typing import Literal
 
 # Path files to be used
 ROOT_PATH = Path(__file__).resolve().parent.parent.parent.parent
 RAW_DATA_PATH = ROOT_PATH / "data" / "raw_data" / r"Telco-Customer-Churn.csv"
 DB_PATH = ROOT_PATH / "data" / "processed_data" / "churn_warehouse.db"
 DB_TABLE_NAME = "customer_churn_records"
+TARGET_COLUMN_NAME = "churn"
 SCHEMA_MAP: Mapping[Hashable, str] = MappingProxyType(
     {
         "customer_id": "string",
@@ -14,7 +16,7 @@ SCHEMA_MAP: Mapping[Hashable, str] = MappingProxyType(
         "senior_citizen": "boolean",
         "partner": "boolean",
         "dependents": "boolean",
-        "tenure": "Int64",
+        "tenure": "Float64",
         "phone_service": "boolean",
         "multiple_lines": "string",
         "internet_services": "string",
@@ -32,10 +34,8 @@ SCHEMA_MAP: Mapping[Hashable, str] = MappingProxyType(
         "churn": "boolean",
     }
 )
-MODEL_NAMES = (
-    "logistic_regression",
-    "random_forest",
-    "xgboost",
-    "k_neighbors",
-)
+ESTIMATOR_MODELS: dict[Literal["Tree_models", "Linear_distance_models"], list[str]] = {
+    "Tree_models": ["xgboost", "random_forest"],
+    "Linear_distance_models": ["logistic_regression", "k_neighbors"],
+}
 RANDOM_STATE = 123

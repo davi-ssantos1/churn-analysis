@@ -1,5 +1,5 @@
 """Model orchestrator pipeline module."""
 
-from churn_analysis.models.pipeline import models_pipeline
+from churn_analysis.models.pipeline import ModelsPipeline
 
-__all__ = ("models_pipeline",)
+__all__ = ("ModelsPipeline",)

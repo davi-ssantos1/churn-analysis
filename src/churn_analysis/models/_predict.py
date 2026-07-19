@@ -4,19 +4,22 @@ from typing import Any
 
 import numpy as np
 import numpy.typing as npt
+from imblearn.pipeline import Pipeline
 
-from churn_analysis.utils import ModelProtocol
 
-
-def predict(model: ModelProtocol, X: npt.NDArray[np.float64]) -> Any:
+def predict(
+    model_pipeline: Pipeline, X: npt.NDArray[np.floating[Any]]
+) -> npt.NDArray[np.floating[Any]]:
     """Use a given model to predict the valeus for the provided features.
 
     Args:
-        model: Estimator instance used to make predictions.
-        X: Input feature array
+        model_pipeline: A Imblearn Pipeline instance to be used for training.
+        X: Input feature matrix.
 
     Returns:
         The predicted values array
     """
-    y_pred = model.predict(X)
-    return y_pred
+    threshold = 0.5
+    y_prob_pred: npt.NDArray[np.floating[Any]] = model_pipeline.predict_proba(X=X)[:, 1]
+    y_pred_custom = (y_prob_pred >= threshold).astype(int)
+    return y_pred_custom

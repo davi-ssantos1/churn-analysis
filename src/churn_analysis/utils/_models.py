@@ -1,9 +1,0 @@
-from typing import Any, Protocol
-
-
-class ModelProtocol(Protocol):
-    def fit(self, X: Any, y: Any) -> Any: ...
-
-    def predict(self, X: Any) -> Any: ...
-
-    def get_params(self) -> Any: ...

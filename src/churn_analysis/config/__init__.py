@@ -3,19 +3,21 @@
 from churn_analysis.config._variables import (
     DB_PATH,
     DB_TABLE_NAME,
-    MODEL_NAMES,
+    ESTIMATOR_MODELS,
     RANDOM_STATE,
     RAW_DATA_PATH,
     ROOT_PATH,
     SCHEMA_MAP,
+    TARGET_COLUMN_NAME,
 )
 
 __all__ = (
     "DB_PATH",
     "DB_TABLE_NAME",
-    "MODEL_NAMES",
+    "ESTIMATOR_MODELS",
     "RANDOM_STATE",
     "RAW_DATA_PATH",
     "ROOT_PATH",
     "SCHEMA_MAP",
+    "TARGET_COLUMN_NAME",
 )

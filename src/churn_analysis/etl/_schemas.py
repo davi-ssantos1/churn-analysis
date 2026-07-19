@@ -16,7 +16,7 @@ class CustomerRecord(BaseModel):
     senior_citizen: bool = Field(alias="SeniorCitizen")
     partner: bool = Field(alias="Partner")
     dependents: bool = Field(alias="Dependents")
-    tenure: int = Field(ge=0)
+    tenure: float = Field(ge=0)
     phone_service: bool = Field(alias="PhoneService")
     multiple_lines: str = Field(alias="MultipleLines")
     internet_services: str = Field(alias="InternetService")

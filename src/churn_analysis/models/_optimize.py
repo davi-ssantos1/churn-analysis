@@ -1,63 +1,96 @@
 """Model tuning module."""
 
+from typing import Any
+
 import numpy as np
 import numpy.typing as npt
 import optuna
+from sklearn.model_selection import StratifiedKFold, cross_val_score
 
-from churn_analysis.models._evaluate import evaluate
-from churn_analysis.models._predict import predict
+from churn_analysis.config import RANDOM_STATE
+from churn_analysis.feature_eng import get_preprocessor_pipeline
 from churn_analysis.models._registry import get_model
-from churn_analysis.models._train import train
 
 
 def tune_hyperparemeters(
     model_name: str,
-    x_train: npt.NDArray[np.float64],
-    x_test: npt.NDArray[np.float64],
-    y_train: npt.NDArray[np.float64],
-    y_test: npt.NDArray[np.float64],
-) -> None:
+    apply_smote: bool,
+    x_train: npt.NDArray[np.floating[Any]],
+    y_train: npt.NDArray[np.floating[Any]],
+    n_trials: int,
+) -> dict[str, Any]:
     """Tune the hyperparemeters of a given model using Optuna.
 
     Args:
         model_name: Name of the model to be selected and tuned.
-        x_train: Training input features array.
-        x_test: Test input features array.
-        y_train: Training input target labels array.
-        y_test: Testing input target labels array.
+        apply_smote: Set if SMOTE oversampling will be applied in the model training step.
+        x_train: Training features matrix.
+        y_train: Training target labels array.
+        n_trials: Number of Optuna optimization trials.
+
+    Return:
+        Dictionary containing the optimal hyperparameter mapping found by the study.
     """
 
     def objective(trial: optuna.Trial) -> float:
         match model_name:
             case "xgboost":
                 params = {
-                    "max_depth": trial.suggest_int("max_depth", low=3, high=9),
-                    "learning_rate": trial.suggest_float(
-                        "learning_rate", low=1e-3, high=0.1, log=True
+                    "classifier__max_depth": trial.suggest_int(
+                        "classifier__max_depth", low=3, high=30
+                    ),
+                    "classifier__learning_rate": trial.suggest_float(
+                        "classifier__learning_rate", low=1e-3, high=0.1, log=True
+                    ),
+                    "classifier__n_estimators": trial.suggest_int(
+                        "classifier__n_estimators", low=10, high=200
                     ),
                 }
-            case "k_nearest_neighbors":
+            case "k_neighbors":
                 params = {
-                    "n_neighbors": trial.suggest_int("n_neighbors", low=3, high=30),
-                    "p": trial.suggest_float("p", low=1, high=2),
+                    "classifier__n_neighbors": trial.suggest_int(
+                        "classifier__n_neighbors", low=3, high=30
+                    ),
+                    "classifier__p": trial.suggest_float(
+                        "classifier__p", low=1, high=2
+                    ),
                 }
             case "logistic_regression":
-                params = {"C": trial.suggest_float("C", low=1e-3, high=10, log=True)}
+                params = {
+                    "classifier__C": trial.suggest_float(
+                        "classifier__C", low=1e-3, high=10, log=True
+                    )
+                }
             case "random_forest":
                 params = {
-                    "n_estimators": trial.suggest_int("n_estimators", low=50, high=200),
-                    "max_depth": trial.suggest_int("max_depth", low=3, high=10),
+                    "classifier__n_estimators": trial.suggest_int(
+                        "classifier__n_estimators", low=50, high=200
+                    ),
+                    "classifier__max_depth": trial.suggest_int(
+                        "classifier__max_depth", low=3, high=10
+                    ),
                 }
             case _:
                 raise ValueError(f"{model_name} model not found.")
-        model = get_model(model_name=model_name)
+        if apply_smote:
+            params["smote__k_neighbors"] = trial.suggest_int(
+                "smote__k_neighbors", low=2, high=20
+            )
+        preprocessor = get_preprocessor_pipeline(
+            model_name=model_name, dataframe=x_train
+        )
+        model = get_model(
+            model_name=model_name, preprocessor=preprocessor, apply_smote=apply_smote
+        )
         model.set_params(**params)
-        model = train(model=model, x_train=x_train, y_train=y_train)
-        y_pred = predict(model=model, X=x_test)
-        flat_metrics, _ = evaluate(y_true=y_test, y_pred=y_pred)
-        return flat_metrics["recall_class_1"]
+
+        cv = StratifiedKFold(shuffle=True, random_state=RANDOM_STATE)
+        score = cross_val_score(
+            estimator=model, X=x_train, y=y_train, cv=cv, scoring="roc_auc", n_jobs=5
+        )
+        return float(score.mean())
 
     optuna.logging.set_verbosity(optuna.logging.WARNING)
     study = optuna.create_study(direction="maximize")
-    study.optimize(func=objective, n_trials=20)
+    study.optimize(func=objective, n_trials=n_trials)
     return study.best_params

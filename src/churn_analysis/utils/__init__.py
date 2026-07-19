@@ -1,6 +1,5 @@
 """general methods to be used during runtime."""
 
-from churn_analysis.utils._models import ModelProtocol
-from churn_analysis.utils._sql import execute_query
+from churn_analysis.utils._sql import get_dataframe_from_dbwarehouse
 
-__all__ = ("ModelProtocol", "execute_query")
+__all__ = ("get_dataframe_from_dbwarehouse",)
